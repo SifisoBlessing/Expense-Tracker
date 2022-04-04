@@ -1,16 +1,21 @@
 import sqlite3
+from datetime import datetime
 
 class DBConnect:
 
     def __init__(self):
-        _connection = sqlite3.connect('Database.db')
-        with open('schema.sql') as f:
-            _connection.executescript(f.read())
+        self._connection = sqlite3.connect('resources/Database.db')
+        with open('DataBase\schema.sql') as f:
+            self._connection.executescript(f.read())
 
     def postData(self,name,surname,date):
         cur = self._connection.cursor()
 
-        cur.execute(f"INSERT INTO clients (name, surname, date) VALUES ({name}, {surname}, {date})")
+        date = f"{date}".replace('-','/')
+        print(date)
+
+        cur.execute(f"""INSERT INTO clients( Fname, Lname, Bdate) 
+        VALUES( {name}, {surname}, testing );""")
 
     def execute(self):
         self._connection.commit()

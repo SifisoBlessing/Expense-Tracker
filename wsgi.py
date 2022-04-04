@@ -7,35 +7,34 @@ import os
 
 
 app = Flask(__name__)
+app.config["DEBUG"] = True
 controller = ClientController.Controller()
 app.config['UPLOAD_FOLDER'] =  'static/files'
 
 
-@app.route('/index')
+@app.route('/')
 def index():
     """
         renders the home page
     """
-    print("does it print?")
     return render_template('index.html')
 
 
-@app.route('/index',methods=['POST'])
+@app.route('/postData', methods=["POST"])
 def postData():
     """
-        Captures the data from the form and deserializes it. That data is then 
+        Captures the data from the form and deserializes it.
     """
-    print('i am working')
-    
-    data = f"{request.get_data()}".strip('b\'][')
-    data = json.loads(data)
+    data = request.get_data()
+    data = f"{data}".strip('b\'][')
+    data = data.split("&")
     controller = ClientController.Controller()
-    controller.handleFile(saveFile())
     controller.setData(data)
     controller.postData()
+    # controller.handleFile(saveFile())
     
     
-    return redirect(url_for('graph.html'))
+    return "redirect(url_for('graph.html'))"
 
 def saveFile():
     app.config['UPLOAD_FOLDER'] =  'static/files'
@@ -44,3 +43,7 @@ def saveFile():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
         uploaded_file.save(file_path)
         return file_path
+
+
+if (__name__ == "__main__"):
+     app.run(port = 8080)

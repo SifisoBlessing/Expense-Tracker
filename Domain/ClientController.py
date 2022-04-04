@@ -4,9 +4,10 @@ import pandas as pd
 
 class Controller:
     def setData(self,data):
-        self.name = data
-        self.surname = data
-        self.date = data
+        print(data)
+        self.name = data[0].split("=")[1]
+        self.surname =  data[1].split("=")[1]
+        self.date =  data[2].split("=")[1]
 
     def postData(self):
         db = init_db.DBConnect()
