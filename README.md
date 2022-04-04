@@ -7,7 +7,7 @@ A simple web application that gets an excel sheet from a client and displays it'
 
 ## Application setup steps:
 1. run pip install flask
-2. flask run
+2. run flask run
 
 ## Architecture:
 The project follows a simple Domain Layered Architecture
