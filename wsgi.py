@@ -1,12 +1,15 @@
-from flask import Flask, render_template, request, Response
+from flask import Flask, render_template, request, redirect, url_for
 from Domain import ClientController
 import json
 from Domain import ClientController
+import pandas as pd
+import os
 
 
 app = Flask(__name__)
-
 controller = ClientController.Controller()
+app.config['UPLOAD_FOLDER'] =  'static/files'
+
 
 @app.route('/index')
 def index():
@@ -17,40 +20,27 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/postData')
+@app.route('/index',methods=['POST'])
 def postData():
     """
         Captures the data from the form and deserializes it. That data is then 
     """
-    try:
-        data = request.get_data()
-        data = f"{data}".strip('b\'][')
-        data = json.loads(data)
-        controller = ClientController.Controller()
-        controller.setData(data)
-        controller.postData()
+    print('i am working')
+    
+    data = f"{request.get_data()}".strip('b\'][')
+    data = json.loads(data)
+    controller = ClientController.Controller()
+    controller.handleFile(saveFile())
+    controller.setData(data)
+    controller.postData()
+    
+    
+    return redirect(url_for('graph.html'))
 
-        return Response("success")
-    except:
-        return Response(status=400)
-
-
-
-@app.route('/testing')
-def saveData():
-    data = [
-        ("01-01-2022",1594),
-        ("02-01-2022",1594),
-        ("03-01-2022",1594),
-        ("04-01-2022",1594),
-        ("04-01-2022",1594),
-        ("05-01-2022",1594),
-        ("06-01-2022",1594),
-        ("07-01-2022",1594),
-        ("08-01-2022",1594),
-
-    ]
-
-    labels = [row[0] for row in data]
-    values = [row[1] for row in data]
-    return render_template("graph.html",labels=labels, values=values)
+def saveFile():
+    app.config['UPLOAD_FOLDER'] =  'static/files'
+    uploaded_file = request.files['file']
+    if uploaded_file.filename != '':
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+        uploaded_file.save(file_path)
+        return file_path

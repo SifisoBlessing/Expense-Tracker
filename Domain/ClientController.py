@@ -1,4 +1,6 @@
+import os
 from DataBase import init_db
+import pandas as pd
 
 class Controller:
     def setData(self,data):
@@ -11,5 +13,6 @@ class Controller:
         db.postData(self.name,self.surname,self.date)
         db.execute()
 
-    def getData(self):
-        pass
+    def handleFile(self,filePath):
+        df_sheet_index = pd.read_excel(filePath, sheet_name=1)
+        print(df_sheet_index)
