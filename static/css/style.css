@@ -8,7 +8,7 @@ h1 {
 
 form {
     padding: 20px;
-    width: 33%;
+    width: auto;
     border-radius: 10px;
     background-color: #f2f2f2;
     padding: 20px;
@@ -26,7 +26,7 @@ input {
 
 input[type=submit] {
   width: 100%;
-  background-color: #4CAF50;
+  background-color: #65f16a;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -43,5 +43,5 @@ body {
   box-sizing: border-box;
   margin: 20px;
   font-family: sans-serif;
-  background-color: 	#FFF8DC;
+  background-color: 	#8a7d4c;
 }

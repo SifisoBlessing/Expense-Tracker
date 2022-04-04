@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from flask import Flask, render_template, request, redirect, url_for
 from Domain import ClientController
 import json
@@ -20,6 +21,22 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/expenseFile')
+def expensefileView():
+    """
+        renders the expenseFile.html page
+    """
+    return render_template('expenseFile.html')
+
+    
+@app.route('/graphs')
+def graphsView():
+    """
+        renders the graph.html page
+    """
+    return render_template('graph.html')
+
+
 @app.route('/postData', methods=["POST"])
 def postData():
     """
@@ -31,19 +48,25 @@ def postData():
     controller = ClientController.Controller()
     controller.setData(data)
     controller.postData()
-    # controller.handleFile(saveFile())
-    
-    
-    return "redirect(url_for('graph.html'))"
+    return redirect("/expenseFile")
 
+
+@app.route('/saveFile', methods=["POST"])
 def saveFile():
+    """
+        gets the file from user and saves it
+    """
+    render_template("expenseFile.html")
     app.config['UPLOAD_FOLDER'] =  'static/files'
-    uploaded_file = request.files['file']
+    uploaded_file = request.files['Efile']
     if uploaded_file.filename != '':
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+        file_path = f"{file_path}".replace('\\','/')
         uploaded_file.save(file_path)
-        return file_path
+        controller = ClientController.Controller()
+        controller.handleFile(file_path)
+        return redirect("/graphs")
 
 
-if (__name__ == "__main__"):
+if (__name__ == "__main__"): 
      app.run(port = 8080)

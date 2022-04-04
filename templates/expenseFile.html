@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block table %}
+    <form method="POST" action="saveFile" enctype="multipart/form-data">
+
+        <label for="Efile">Please select the expenses excel file</label>
+        <input type="file" id="Efile" name="Efile">
+
+        <input type="submit" value="submit">
+    </form>
+{% endblock %}
