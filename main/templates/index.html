@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block table %}
+    <form id="client_form" ></form>
+        <label for="Fname">First name:</label>
+        <input type="text" id="Fname" name="Fname" required>
+
+        <label for="Lname">Last name:</label>
+        <input type="text" id="Lname" name="Lname" required>
+
+        <label for="date">Date of birth</label>
+        <input type="date" id="date" required">
+
+        <label for="Efile">User Data</label>
+        <input type="file" id="Efile" name="Efile" required>
+
+        <input type="submit" value="submit">
+    </form>
+{% endblock %}
