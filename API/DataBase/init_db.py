@@ -9,7 +9,6 @@ class DBConnect:
 
     def postData(self,name,surname,date):
         cur = self._connection.cursor()
-        print(date)
 
         cur.execute(f"INSERT INTO clients( Fname, Lname, Bdate) VALUES( \"{name}\", \"{surname}\", \"{date}\" )")
 

@@ -13,30 +13,22 @@ class Controller:
         db.execute()
 
     def handleFile(self,filePath):
-        df_sheet_index = pd.read_excel(filePath, sheet_name=0)
-        expense_amount = 0
-        income_amount = 0
-        incomes = []
-        expenses = []
-        dates = []
+        try:
+            df_sheet_index = pd.read_excel(filePath, sheet_name=0)
+            expense_amount = 0
+            income_amount = 0
 
-        for date in df_sheet_index["date"]:
-            date = f"{date}".replace('-','/')
-            dates.append(date)
+            dates = [f"{x}".replace('-','/') for x in df_sheet_index["date"]]
+            incomes = [x for x in df_sheet_index["income amount"]]
+            expenses = [x for x in df_sheet_index["expense amount"]]
 
-        
-        for income in df_sheet_index["income amount"]:
-            incomes.append(income)
+            for val in df_sheet_index["expense amount"]:
+                expense_amount += int(val)
 
-        
-        for expense in df_sheet_index["expense amount"]:
-            expenses.append(expense)
-
-        for val in df_sheet_index["expense amount"]:
-            expense_amount += int(val)
-
-        
-        for val in df_sheet_index["income amount"]:
-            income_amount += int(val)
+            
+            for val in df_sheet_index["income amount"]:
+                income_amount += int(val)
+        except:
+            raise Exception
 
         return [income_amount,expense_amount,dates,incomes,expenses]
