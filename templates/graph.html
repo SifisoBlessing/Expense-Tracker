@@ -1,42 +1,149 @@
 {% extends 'base.html' %}
 
 {% block table %}
-<canvas id="myChart" width="50" height="40"></canvas>
+
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="pieChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="incomeBarGraph"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-xs-10 col-sm-6 col-md-6">
+    <div class="card card-style mb-2">
+        <div class="card-body">
+            <div class="chart-container" style="position: relative;">
+                <canvas id="expenseBarGraph"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: 'income vs expenses',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
+    const ctx = document.getElementById('pieChart').getContext('2d');
+    const income_vs_expense_chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: ['income', 'expense'],
+            datasets: [{
+                label: "Income Vs Expenses",
+                data: {{ income_vs_expenses }},
+                backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68','#B276B2', '#E16851', '#FB8267'],
+                borderWidth: 1,
+                hoverBorderColor: "black",
+                hoverBorderWidth: 2,
+                hoverBackgroundColor: 'rgba(154, 245, 140)',
+                pointHoverRadius: 5
+            }],
+        },
+        options: {
+            title: {
+            display: true,
+            text: "Income Vs Expenses",
+            fontSize: 20,
+            },
+            legend: {
+                position: "right",
+                labels: {
+                    fontColor: "gray"
+                },
+                display: true,
+            },
+            elements: {
+                hitRadius: 3,
             }
         }
-    }
-});
+    })
+
+
+    const bar = document.getElementById('incomeBarGraph').getContext('2d');
+    let income_vs_category_chart = new Chart(bar, {
+            type: 'bar',
+            data: {
+                labels: ['investment', 'rent', 'salary', 'side_hustle'],
+                datasets: [{
+                    label: "Categories Of Income",
+                    data: [500,200,300,400],
+            backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68',
+                '#B276B2', '#E16851', '#FB8267'],
+            borderWidth: 1,
+            hoverBorderColor: "black",
+            hoverBorderWidth: 2,
+            hoverBackgroundColor: 'rgba(154, 245, 140)',
+            pointHoverRadius: 5
+        }],
+            },
+        options: {
+                title: {
+                    display: true,
+                        text: "Income",
+                            fontSize: 20,
+            },
+                legend: {
+                    position: "right",
+                        labels: {
+                        fontColor: "gray"
+                    },
+                    display: true,
+            },
+
+                elements: {
+                    hitRadius: 3,
+            }
+            }
+        })
+
+    const expenseBar = document.getElementById('expenseBarGraph').getContext('2d');
+    let Expense_vs_category_chart = new Chart(expenseBar, {
+            type: 'bar',
+            data: {
+                labels: ['investment', 'rent', 'salary', 'side_hustle'],
+                datasets: [{
+                    label: "Categories Of Income",
+                    data: [500,200,300,400],
+            backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68',
+                '#B276B2', '#E16851', '#FB8267'],
+            borderWidth: 1,
+            hoverBorderColor: "black",
+            hoverBorderWidth: 2,
+            hoverBackgroundColor: 'rgba(154, 245, 140)',
+            pointHoverRadius: 5
+        }],
+            },
+        options: {
+                title: {
+                    display: true,
+                        text: "Expense",
+                            fontSize: 20,
+            },
+                legend: {
+                    position: "right",
+                        labels: {
+                        fontColor: "gray"
+                    },
+                    display: true,
+            },
+
+                elements: {
+                    hitRadius: 3,
+            }
+            }
+        })
+
 </script>
 {% endblock %}

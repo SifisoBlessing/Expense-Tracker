@@ -16,7 +16,21 @@ class Controller:
     def handleFile(self,filePath):
         df_sheet_index = pd.read_excel(filePath, sheet_name=0)
         expense_amount = 0
-        income_amount = 0 
+        income_amount = 0
+        incomes = []
+        expenses = []
+        dates = []
+
+        for date in df_sheet_index["date"]:
+            dates.append(date)
+
+        
+        for income in df_sheet_index["income amount"]:
+            incomes.append(income)
+
+        
+        for expense in df_sheet_index["expense amount"]:
+            expenses.append(expense)
 
         for val in df_sheet_index["expense amount"]:
             expense_amount += int(val)
@@ -25,4 +39,4 @@ class Controller:
         for val in df_sheet_index["income amount"]:
             income_amount += int(val)
             
-        return expense_amount,income_amount
+        return [income_amount,expense_amount,dates,incomes,expenses]

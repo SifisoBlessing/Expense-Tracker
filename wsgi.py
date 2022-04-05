@@ -29,12 +29,12 @@ def expensefileView():
     return render_template('expenseFile.html')
 
     
-@app.route('/graphs')
-def graphsView():
-    """
-        renders the graph.html page
-    """
-    return render_template('graph.html')
+# @app.route('/graphs')
+# def graphsView():
+#     """
+#         renders the graph.html page
+#     """
+#     return render_template('graph.html')
 
 
 @app.route('/postData', methods=["POST"])
@@ -64,8 +64,9 @@ def saveFile():
         file_path = f"{file_path}".replace('\\','/')
         uploaded_file.save(file_path)
         controller = ClientController.Controller()
-        x,y = controller.handleFile(file_path)
-        return redirect("/graphs")
+        data = controller.handleFile(file_path)
+        print(json.dumps([data[0],data[1]]))
+        return render_template("graph.html",income_vs_expenses = json.dumps([data[0],data[1]]), )
 
 
 if (__name__ == "__main__"): 
