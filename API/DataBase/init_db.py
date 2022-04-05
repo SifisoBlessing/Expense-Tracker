@@ -1,11 +1,10 @@
 import sqlite3
-from datetime import datetime
 
 class DBConnect:
 
     def __init__(self):
-        self._connection = sqlite3.connect('resources/Database.db')
-        with open('DataBase\schema.sql') as f:
+        self._connection = sqlite3.connect('API/resources/Database.db')
+        with open('API/DataBase\schema.sql') as f:
             self._connection.executescript(f.read())
 
     def postData(self,name,surname,date):

@@ -1,17 +1,9 @@
-from django.shortcuts import render
-from flask import Flask, render_template, request, redirect, url_for
-from Domain import ClientController
+from flask import Flask, render_template, request, redirect
+from API.Domain import ClientController
 import json
-from Domain import ClientController
-import pandas as pd
 import os
 
-
 app = Flask(__name__)
-app.config["DEBUG"] = True
-controller = ClientController.Controller()
-app.config['UPLOAD_FOLDER'] =  'static/files'
-
 
 @app.route('/')
 def index():
@@ -27,14 +19,6 @@ def expensefileView():
         renders the expenseFile.html page
     """
     return render_template('expenseFile.html')
-
-    
-# @app.route('/graphs')
-# def graphsView():
-#     """
-#         renders the graph.html page
-#     """
-#     return render_template('graph.html')
 
 
 @app.route('/postData', methods=["POST"])
@@ -57,7 +41,6 @@ def saveFile():
         gets the file from user and saves it
     """
     render_template("expenseFile.html")
-    app.config['UPLOAD_FOLDER'] =  'static/files'
     uploaded_file = request.files['Efile']
     if uploaded_file.filename != '':
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
@@ -71,7 +54,3 @@ def saveFile():
             income = json.dumps(data[3]),
             expense = json.dumps(data[4])
             )
-
-
-if (__name__ == "__main__"): 
-     app.run(port = 8080)
