@@ -15,10 +15,11 @@ A simple web application that gets an excel sheet from a client and displays the
 1. File should be an excel file
 2. Ensure that the data is stored in sheet=0
 3. Data example:
-      A             B            C
-     date         expense      income
-  22/01/2022       500          200
-  25/01/2022       50           201
+  |    A        |    B       |    C     |
+  |    ---      |   ---      |   ---    |
+  |   date      |  expense   |  income  |
+  |22/01/2022   |   500      |   200    |
+  |25/01/2022   |   50       |   201    |
 
 
 ## Architecture:
