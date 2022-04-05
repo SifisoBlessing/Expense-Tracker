@@ -12,9 +12,9 @@ A simple web application that gets an excel sheet from a client and displays the
 4. url = http://localhost:8080
 
 ## File format expected
-File should be an excel file
-ensure that the data is stored in sheet=0
-Data example:
+1. File should be an excel file
+2. ensure that the data is stored in sheet=0
+3. Data example:
 |A          |    B       |    C   |
 |-----------|----------|----------|
 |date       |  expense |  income  |
