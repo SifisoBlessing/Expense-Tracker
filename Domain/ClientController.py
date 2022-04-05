@@ -1,6 +1,7 @@
 import os
 from DataBase import init_db
 import pandas as pd
+from datetime import datetime
 
 class Controller:
     def setData(self,data):
@@ -22,6 +23,9 @@ class Controller:
         dates = []
 
         for date in df_sheet_index["date"]:
+            date = f"{date}".replace('-','/')
+            # print(datetime.strptime(date, '%d/%m/%y'))
+            # dates.append(datetime.strptime(date, '%d/%m/%y'))
             dates.append(date)
 
         
@@ -38,5 +42,5 @@ class Controller:
         
         for val in df_sheet_index["income amount"]:
             income_amount += int(val)
-            
+
         return [income_amount,expense_amount,dates,incomes,expenses]

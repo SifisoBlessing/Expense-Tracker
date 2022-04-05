@@ -65,8 +65,12 @@ def saveFile():
         uploaded_file.save(file_path)
         controller = ClientController.Controller()
         data = controller.handleFile(file_path)
-        print(json.dumps([data[0],data[1]]))
-        return render_template("graph.html",income_vs_expenses = json.dumps([data[0],data[1]]), )
+        return render_template("graph.html",
+            income_vs_expenses = json.dumps([data[0],data[1]]),
+            dates_label = json.dumps(data[2]),
+            income = json.dumps(data[3]),
+            expense = json.dumps(data[4])
+            )
 
 
 if (__name__ == "__main__"): 

@@ -70,15 +70,18 @@
         }
     })
 
+    
+    labels = JSON.parse({{ dates_label  | tojson}})
+    console.log(labels)
 
     const bar = document.getElementById('incomeBarGraph').getContext('2d');
     let income_vs_category_chart = new Chart(bar, {
             type: 'bar',
             data: {
-                labels: ['investment', 'rent', 'salary', 'side_hustle'],
+                labels: labels,
                 datasets: [{
-                    label: "Categories Of Income",
-                    data: [500,200,300,400],
+                    label: "Income",
+                    data: {{ income }},
             backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68',
                 '#B276B2', '#E16851', '#FB8267'],
             borderWidth: 1,
@@ -112,10 +115,10 @@
     let Expense_vs_category_chart = new Chart(expenseBar, {
             type: 'bar',
             data: {
-                labels: ['investment', 'rent', 'salary', 'side_hustle'],
+                labels: labels,
                 datasets: [{
-                    label: "Categories Of Income",
-                    data: [500,200,300,400],
+                    label: "Expenses",
+                    data: {{ expense }},
             backgroundColor: ['#5DA5DA ', '#FAA43A', '#60BD68',
                 '#B276B2', '#E16851', '#FB8267'],
             borderWidth: 1,
