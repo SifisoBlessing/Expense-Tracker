@@ -64,7 +64,7 @@ def saveFile():
         file_path = f"{file_path}".replace('\\','/')
         uploaded_file.save(file_path)
         controller = ClientController.Controller()
-        controller.handleFile(file_path)
+        x,y = controller.handleFile(file_path)
         return redirect("/graphs")
 
 

@@ -15,4 +15,14 @@ class Controller:
 
     def handleFile(self,filePath):
         df_sheet_index = pd.read_excel(filePath, sheet_name=0)
-        print(df_sheet_index)
+        expense_amount = 0
+        income_amount = 0 
+
+        for val in df_sheet_index["expense amount"]:
+            expense_amount += int(val)
+
+        
+        for val in df_sheet_index["income amount"]:
+            income_amount += int(val)
+            
+        return expense_amount,income_amount
