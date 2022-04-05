@@ -8,7 +8,7 @@ A simple web application that gets an excel sheet from a client and displays the
 ## Application setup steps:
 1. pip install flask
 2. pip install pandas
-3. flask run or python app.py
+3. python app.py
 4. url = http://localhost:8080
 
 ## File format expected
