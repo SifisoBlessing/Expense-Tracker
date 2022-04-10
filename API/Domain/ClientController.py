@@ -1,5 +1,5 @@
 from API.DataBase import init_db
-import pandas as pd
+from API.Domain import DataHandler
 
 class Controller:
     def setData(self,data):
@@ -13,22 +13,11 @@ class Controller:
         db.execute()
 
     def handleFile(self,filePath):
-        try:
-            df_sheet_index = pd.read_excel(filePath, sheet_name=0)
-            expense_amount = 0
-            income_amount = 0
+            dataHandler = DataHandler.HandleData(filePath)
+            incomeAmount = dataHandler.getTotalIncomeAmount()
+            expenseAmount = dataHandler.getTotalExpenseAmount()
+            dateInYears = dataHandler.getDateInYears()
+            yearlyIncome = dataHandler.getYearlyIncome()
+            yearlyExpense = dataHandler.getYearlyExpense()
 
-            dates = [f"{x}".replace('-','/') for x in df_sheet_index["date"]]
-            incomes = [x for x in df_sheet_index["income amount"]]
-            expenses = [x for x in df_sheet_index["expense amount"]]
-
-            for val in df_sheet_index["expense amount"]:
-                expense_amount += int(val)
-
-            
-            for val in df_sheet_index["income amount"]:
-                income_amount += int(val)
-        except:
-            raise Exception
-
-        return [income_amount,expense_amount,dates,incomes,expenses]
+            return [incomeAmount, expenseAmount, dateInYears, yearlyIncome, yearlyExpense]
