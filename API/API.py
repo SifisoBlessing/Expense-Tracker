@@ -31,8 +31,19 @@ def postData():
     data = data.split("&")
     controller = ClientController.Controller()
     controller.setData(data)
-    controller.postData()
-    return redirect("/expenseFile")
+
+    #loads the user data from the dataBase if the user already exists
+    #redirects to the expenseFile view to prompt the user to insert new data
+
+    if controller.validateData():
+        data = controller.getFileData()
+        return render_template("graph.html",
+            income_vs_expenses = json.dumps([data[0],data[1]]),
+            dates_label = json.dumps(data[2]),
+            income = json.dumps(data[3]),
+            expense = json.dumps(data[4])
+    else:
+        return redirect("/expenseFile")
 
 
 @app.route('/saveFile', methods=["POST"])
