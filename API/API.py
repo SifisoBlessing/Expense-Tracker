@@ -54,21 +54,21 @@ def saveFile():
         gets the file from user and saves it
     """
     render_template("expenseFile.html")
-    # try:
-    uploaded_file = request.files['Efile']
-    if uploaded_file.filename != '':
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
-        file_path = f"{file_path}".replace('\\','/')
-        uploaded_file.save(file_path)
-        data = controller.handleFile(file_path)
-        return render_template("graph.html",
-            income_vs_expenses = json.dumps([data[0],data[1]]),
-            dates_label = json.dumps(data[2]),
-            income = json.dumps(data[3]),
-            expense = json.dumps(data[4])
-            )
-    # except:
-    #     return redirect("/error")
+    try:
+        uploaded_file = request.files['Efile']
+        if uploaded_file.filename != '':
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+            file_path = f"{file_path}".replace('\\','/')
+            uploaded_file.save(file_path)
+            data = controller.handleFile(file_path)
+            return render_template("graph.html",
+                income_vs_expenses = json.dumps([data[0],data[1]]),
+                dates_label = json.dumps(data[2]),
+                income = json.dumps(data[3]),
+                expense = json.dumps(data[4])
+                )   
+    except:
+        return redirect("/error")
 
 @app.route('/error')
 def errorPage():
