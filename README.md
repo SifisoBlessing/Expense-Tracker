@@ -1,5 +1,5 @@
 # Expense-Tracker
-A simple web application that gets an excel sheet from a client and displays the data in graphs.
+A simple web application that gets an excel sheet from a client and displays the data in graphs as a story.
 
 ## Requirements:
 1. Python
