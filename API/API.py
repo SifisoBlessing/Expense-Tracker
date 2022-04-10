@@ -4,6 +4,8 @@ import json
 import os
 
 app = Flask(__name__)
+controller = ClientController.Controller()
+
 
 @app.route('/')
 def index():
@@ -29,7 +31,6 @@ def postData():
     data = request.get_data()
     data = f"{data}".strip('b\'][')
     data = data.split("&")
-    controller = ClientController.Controller()
     controller.setData(data)
 
     #loads the user data from the dataBase if the user already exists
@@ -42,6 +43,7 @@ def postData():
             dates_label = json.dumps(data[2]),
             income = json.dumps(data[3]),
             expense = json.dumps(data[4])
+        )
     else:
         return redirect("/expenseFile")
 
@@ -58,10 +60,7 @@ def saveFile():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
         file_path = f"{file_path}".replace('\\','/')
         uploaded_file.save(file_path)
-        controller = ClientController.Controller()
         data = controller.handleFile(file_path)
-        print("hello i am testing")
-        print(data[3])
         return render_template("graph.html",
             income_vs_expenses = json.dumps([data[0],data[1]]),
             dates_label = json.dumps(data[2]),

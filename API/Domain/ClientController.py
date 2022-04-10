@@ -4,7 +4,7 @@ from API.Domain import DataHandler
 
 class Controller:
 
-    def __init__(self) -> None:
+    def __init__(self):
         self.db = init_db.DBConnect()
 
     def setData(self,data):
@@ -16,10 +16,12 @@ class Controller:
         """
             return True if the user exists
         """
-        value = self.db.getUserId(self.name,self.surname,self.date)
-        if value.arraysize == 0:
+        db = init_db.DBConnect()
+
+        value = db.getUserId(self.name,self.surname,self.date)
+        if len(value) == 0:
             self.postData()
-            self.db.execute()
+            db.execute()
             return False
 
         else:
@@ -27,30 +29,36 @@ class Controller:
         
 
     def postData(self):
-        self.db.postData(self.name,self.surname,self.date)
-        self.db.execute()
+        db = init_db.DBConnect()
+        db.postData(self.name,self.surname,self.date)
+        db.execute()
 
     def handleFile(self,filePath):
-            dataHandler = DataHandler.HandleData(filePath)
-            incomeAmount = dataHandler.getTotalIncomeAmount()
-            expenseAmount = dataHandler.getTotalExpenseAmount()
-            dateInYears = dataHandler.getDateInYears()
-            yearlyIncome = dataHandler.getYearlyIncome()
-            yearlyExpense = dataHandler.getYearlyExpense()
+        db = init_db.DBConnect()
 
-            data = [incomeAmount, expenseAmount, dateInYears, yearlyIncome, yearlyExpense]
-            # self.db.saveFileData(data)
+        dataHandler = DataHandler.HandleData(filePath)
+        incomeAmount = dataHandler.getTotalIncomeAmount()
+        expenseAmount = dataHandler.getTotalExpenseAmount()
+        dateInYears = dataHandler.getDateInYears()
+        yearlyIncome = dataHandler.getYearlyIncome()
+        yearlyExpense = dataHandler.getYearlyExpense()
 
-            return data
+        data = [incomeAmount, expenseAmount, dateInYears, yearlyIncome, yearlyExpense]
+        id = db.getUserId(self.name,self.surname,self.date)
+
+        db.saveFileData(data,id[0]["id"])
+        db.execute()
+
+        return data
 
     def getFileData(self):
-        id = self.db.getUserId(self.name,self.surname,self.date)
-        data = self.db.getFileData(id)
-        self.db.execute()
-
-        return [data["summedIncome"],
-            data["summedExpense"],
-            json.loads(data["dateInYears"]),
-            json.loads(data["yearlyIncome"]),
-            json.loads(data["yearlyExpense"])
+        db = init_db.DBConnect()
+        id = db.getUserId(self.name,self.surname,self.date)
+        data = db.getFileData(id[0]["id"])
+        db.execute()
+        return [data[0][1],
+            data[0][2],
+            json.loads(data[0][3]),
+            json.loads(data[0][4]),
+            json.loads(data[0][5])
         ]

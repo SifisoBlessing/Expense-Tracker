@@ -14,7 +14,6 @@ class HandleData:
     def getTotalExpenseAmount(self):
         amount = 0
         for val in self._expenses:
-            print(val)
             amount += int(val)
         return amount
 
